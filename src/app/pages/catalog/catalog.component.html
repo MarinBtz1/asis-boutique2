@@ -1,0 +1,40 @@
+<div class="container py-4">
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <div>
+      <div class="text-uppercase text-muted small">Catalog</div>
+      <h2 class="mb-0">Produse</h2>
+    </div>
+    <a routerLink="/admin" class="btn btn-primary">Administrare</a>
+  </div>
+
+  <div class="card p-3 mb-4">
+    <div class="row g-3 align-items-end">
+      <div class="col-lg-7">
+        <label class="form-label">Căutare</label>
+        <input class="form-control" placeholder="Caută produse..."
+               [(ngModel)]="q" (input)="applyFilters()">
+      </div>
+
+      <div class="col-lg-5">
+        <label class="form-label">Categorie</label>
+        <select class="form-select" [(ngModel)]="categoryId" (change)="applyFilters()">
+          <option value="ALL">Toate categoriile</option>
+          <option *ngFor="let c of categories" [value]="c.id">{{ c.name }}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert alert-info" *ngIf="loading">Se încarcă datele...</div>
+  <div class="alert alert-danger" *ngIf="!loading && error">{{ error }}</div>
+
+  <div class="row g-4" *ngIf="!loading && !error">
+    <div class="col-sm-6 col-lg-4 col-xl-3" *ngFor="let p of filtered">
+      <app-product-card [item]="p"></app-product-card>
+    </div>
+  </div>
+
+  <div class="alert alert-warning mt-3" *ngIf="!loading && !error && filtered.length===0">
+    Nu s-au găsit produse.
+  </div>
+</div>

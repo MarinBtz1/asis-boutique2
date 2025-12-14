@@ -1,0 +1,8 @@
+.filters .form-control,
+.filters .form-select{
+  border-radius: 14px;
+}
+
+.filters .card{
+  border-radius: 18px;
+}

@@ -1,0 +1,44 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand fw-bold" routerLink="/">ASIS BOUTIQUE</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="nav" class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+            Acasă
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/catalog" routerLinkActive="active">Catalog</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/about" routerLinkActive="active">Despre</a>
+        </li>
+
+        <!-- ✅ Admin doar pentru admin -->
+        <li class="nav-item" *ngIf="!loading && isAdmin">
+          <a class="nav-link" routerLink="/admin" routerLinkActive="active">Administrare</a>
+        </li>
+
+        <li class="nav-item ms-lg-3">
+          <!-- Not logged -->
+          <a class="btn btn-outline-light" routerLink="/login" *ngIf="!loading && !isLoggedIn">
+            Login
+          </a>
+
+          <!-- Logged -->
+          <button class="btn btn-light" type="button" (click)="logout()" *ngIf="!loading && isLoggedIn">
+            Logout
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

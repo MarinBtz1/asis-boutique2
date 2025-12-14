@@ -1,0 +1,90 @@
+<div class="container py-4">
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <div>
+      <div class="text-uppercase text-muted small">Admin</div>
+      <h2 class="mb-0">Gestionare produse</h2>
+    </div>
+    <button class="btn btn-outline-dark" (click)="startAdd()">+ Produs nou</button>
+  </div>
+
+  <div class="alert alert-info" *ngIf="loading">Se încarcă...</div>
+  <div class="alert alert-success" *ngIf="!loading && success">{{ success }}</div>
+  <div class="alert alert-danger" *ngIf="!loading && error">{{ error }}</div>
+
+  <div class="card p-4 shadow-sm mb-4" *ngIf="!loading">
+    <h5 class="mb-3">{{ editId ? 'Editează produs' : 'Adaugă produs' }}</h5>
+
+    <form [formGroup]="form" (ngSubmit)="save()">
+      <div class="row g-3">
+        <div class="col-lg-6">
+          <label class="form-label">Nume</label>
+          <input class="form-control" formControlName="name">
+          <div class="text-danger small" *ngIf="form.controls.name.touched && form.controls.name.invalid">
+            Minim 3 caractere.
+          </div>
+        </div>
+
+        <div class="col-lg-3">
+          <label class="form-label">Preț</label>
+          <input type="number" class="form-control" formControlName="price">
+          <div class="text-danger small" *ngIf="form.controls.price.touched && form.controls.price.invalid">
+            Preț invalid.
+          </div>
+        </div>
+
+        <div class="col-lg-3">
+          <label class="form-label">Categorie</label>
+          <select class="form-select" formControlName="category_id">
+            <option *ngFor="let c of categories" [value]="c.id">{{ c.name }}</option>
+          </select>
+          <div class="text-danger small" *ngIf="form.controls.category_id.touched && form.controls.category_id.invalid">
+            Selectează o categorie.
+          </div>
+        </div>
+
+        <div class="col-12">
+          <label class="form-label">Imagine URL (ex: assets/img/denim.jpg)</label>
+          <input class="form-control" formControlName="image_url">
+          <div class="text-danger small" *ngIf="form.controls.image_url.touched && form.controls.image_url.invalid">
+            Imagine obligatorie.
+          </div>
+        </div>
+
+        <div class="col-12">
+          <label class="form-label">Descriere</label>
+          <textarea rows="3" class="form-control" formControlName="description"></textarea>
+          <div class="text-danger small" *ngIf="form.controls.description.touched && form.controls.description.invalid">
+            Minim 10 caractere.
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex gap-2 mt-3">
+        <button class="btn btn-primary" type="submit" [disabled]="saving">
+          {{ saving ? 'Se salvează...' : (editId ? 'Salvează' : 'Adaugă') }}
+        </button>
+
+        <button class="btn btn-outline-secondary" type="button" (click)="startAdd()" [disabled]="saving">
+          Reset
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="row g-3" *ngIf="!loading">
+    <div class="col-md-6 col-lg-4" *ngFor="let p of products">
+      <div class="card h-100 shadow-sm">
+        <img class="card-img-top" [src]="p.image_url" [alt]="p.name" style="height:200px; object-fit:cover;">
+        <div class="card-body">
+          <h5 class="card-title mb-1">{{ p.name }}</h5>
+          <p class="card-text text-muted small">{{ p.description }}</p>
+
+          <div class="d-flex gap-2">
+            <button class="btn btn-sm btn-outline-primary" (click)="startEdit(p)">Edit</button>
+            <button class="btn btn-sm btn-outline-danger" (click)="remove(p.id)">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

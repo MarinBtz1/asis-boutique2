@@ -1,0 +1,9 @@
+.hero-title{
+  letter-spacing: .02em;
+}
+
+.hero-img{
+  height: 360px;
+  object-fit: cover;
+  border-radius: 18px;
+}

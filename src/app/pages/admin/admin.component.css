@@ -1,0 +1,6 @@
+textarea.form-control{
+  border-radius: 14px;
+}
+input.form-control, select.form-select{
+  border-radius: 14px;
+}

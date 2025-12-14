@@ -1,0 +1,38 @@
+<div class="container py-5" style="max-width: 520px;">
+  <div class="card shadow-sm p-4">
+    <div class="text-uppercase text-muted small">ASIS BOUTIQUE</div>
+    <h2 class="mb-3">Logare administrator</h2>
+
+    <div class="alert alert-danger" *ngIf="error">{{ error }}</div>
+    <div class="alert alert-success" *ngIf="success">{{ success }}</div>
+
+    <form [formGroup]="form" (ngSubmit)="login()">
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input class="form-control" type="email" formControlName="email" placeholder="admin@email.com">
+        <div class="text-danger small" *ngIf="form.controls.email.touched && form.controls.email.invalid">
+          Email invalid.
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Parolă</label>
+        <input class="form-control" type="password" formControlName="password" placeholder="minim 6 caractere">
+        <div class="text-danger small" *ngIf="form.controls.password.touched && form.controls.password.invalid">
+          Parolă invalidă (minim 6 caractere).
+        </div>
+      </div>
+
+      <button class="btn btn-dark w-100" type="submit" [disabled]="loading">
+        {{ loading ? 'Se loghează...' : 'Login' }}
+      </button>
+
+      <!-- opțional: signup -->
+      <button class="btn btn-outline-dark w-100 mt-2" type="button" (click)="signup()" [disabled]="loading">
+        Creează cont (Signup)
+      </button>
+
+      <a routerLink="/" class="btn btn-link w-100 mt-2">Înapoi la Home</a>
+    </form>
+  </div>
+</div>

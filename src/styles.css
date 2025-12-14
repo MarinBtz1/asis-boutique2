@@ -1,1 +1,85 @@
 /* You can add global styles to this file, and also import other style files */
+/* Base */
+:root{
+  --bg: #ffffff;
+  --text: #111827;
+  --muted: #6b7280;
+  --card: #ffffff;
+  --border: rgba(0,0,0,.08);
+  --shadow: 0 10px 25px rgba(0,0,0,.06);
+}
+
+html, body { height: 100%; }
+body{
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+/* Make layout fill height (header - main - footer) */
+app-root{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+main{ flex: 1; }
+
+/* Helpers */
+.section-title{
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-size: .78rem;
+}
+.soft-card{
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  border-radius: 18px;
+}
+.rounded-xxl{ border-radius: 18px; }
+
+/* Buttons look nicer */
+.btn{
+  border-radius: 14px;
+  padding: .65rem 1rem;
+}
+.btn-lg{ padding: .85rem 1.2rem; }
+
+/* Cards */
+.card{
+  border: 1px solid var(--border);
+  border-radius: 18px;
+}
+.card.shadow-sm{ box-shadow: var(--shadow); }
+
+/* Product card hover */
+a .card{
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+a:hover .card{
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(0,0,0,.10);
+}
+
+/* Images */
+.card-img-top{
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+}
+
+/* Hero background similar to screenshot */
+.hero-wrap{
+  background: linear-gradient(180deg, rgba(0,0,0,.06), rgba(0,0,0,0));
+}
+
+/* Dark mode (optional if you used body.dark earlier) */
+body.dark{
+  --bg: #0f1115;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --card: #151924;
+  --border: rgba(255,255,255,.08);
+  --shadow: 0 12px 30px rgba(0,0,0,.45);
+}
+body.dark .bg-light{ background: transparent !important; }
