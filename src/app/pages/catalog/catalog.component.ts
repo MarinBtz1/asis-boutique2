@@ -1,53 +1,65 @@
 import { Component, OnInit } from '@angular/core';
-import { NgFor, NgIf } from '@angular/common';
-import { RouterLink } from '@angular/router';
-import { ProductCardComponent } from '../../features/product-card/product-card.component';
-import { ProductsDbService } from '../../core/services/products-db.service';
-import { CategoriesDbService } from '../../core/services/categories-db.service';
-import { Product } from '../../core/models/product.model';
-import { Category } from '../../core/models/category.model';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-
+import { ProductsDbService, Product } from '../../core/services/products-db.service';
+import { CategoriesDbService, Category } from '../../core/services/categories-db.service';
+import { ItemCardComponent } from '../../shared/item-card/item-car.component';
 
 @Component({
   standalone: true,
-  imports: [NgIf, NgFor, RouterLink, ProductCardComponent, FormsModule],
-  templateUrl: './catalog.component.html',
-  styleUrl: './catalog.component.css'
+  selector: 'app-catalog',
+  imports: [CommonModule, FormsModule, ItemCardComponent],
+  templateUrl: './catalog.component.html'
 })
 export class CatalogComponent implements OnInit {
-  loading = true;
-  error = '';
-  q = '';
-  categoryId = 'ALL';
-
   products: Product[] = [];
   filtered: Product[] = [];
-  categories: Category[] = [];
 
-  constructor(
-    private productsDb: ProductsDbService,
-    private categoriesDb: CategoriesDbService
-  ) {}
+  q = '';
+  category = 'Toate';
+
+  categories: string[] = [];
+
+  loading = true;
+  error = '';
+
+  constructor(private productsDb: ProductsDbService, private categoriesDb: CategoriesDbService) {}
 
   async ngOnInit() {
-    const products = await this.productsDb.getAll();
-    console.log('PRODUCTS FROM SUPABASE:', products);
+    try {
+      this.loading = true;
+
+      const [products, categories] = await Promise.all([
+        this.productsDb.getAll(),
+        this.categoriesDb.getAll()
+      ]);
+
+      this.products = products;
+      this.filtered = [...this.products];
+
+      this.categories = [
+        'Toate',
+        ...categories.map(c => c.name)
+      ];
+    } catch {
+      this.error = 'Eroare la încărcarea datelor';
+    } finally {
+      this.loading = false;
+    }
   }
 
-  applyFilters() {
-    const q = this.q.trim().toLowerCase();
+  applyFilter() {
     this.filtered = this.products.filter(p => {
-      const matchesQ =
-        !q ||
+      const matchesCategory =
+        this.category === 'Toate' || p.category === this.category;
+
+      const q = this.q.toLowerCase();
+      const matchesQuery =
         p.name.toLowerCase().includes(q) ||
         p.description.toLowerCase().includes(q);
 
-      const matchesCat =
-        this.categoryId === 'ALL' || p.category_id === this.categoryId;
-
-      return matchesQ && matchesCat;
+      return matchesCategory && matchesQuery;
     });
   }
 }

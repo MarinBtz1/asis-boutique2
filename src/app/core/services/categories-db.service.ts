@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { supabase } from './supabase.client';
 import { Category } from '../models/category.model';
 
+export type { Category };
+
 @Injectable({ providedIn: 'root' })
 export class CategoriesDbService {
   async getAll(): Promise<Category[]> {

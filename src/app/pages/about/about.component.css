@@ -1,0 +1,33 @@
+.page-bg{
+  background: #f6f8fb;
+  min-height: calc(100vh - 120px);
+}
+
+.card{
+  border-radius: 14px;
+}
+
+.form-control{
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+
+.btn{
+  border-radius: 10px;
+}
+
+.info-row{
+  display: flex;
+  gap: 10px;
+  padding: 14px 16px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.info-row .label{
+  font-weight: 800;
+  min-width: 90px;
+}
+
+.info-row .value{
+  color: #212529;
+}

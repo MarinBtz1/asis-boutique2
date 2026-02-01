@@ -2,58 +2,63 @@ import { Injectable } from '@angular/core';
 import { supabase } from './supabase.client';
 import { Product } from '../models/product.model';
 
+export type { Product };
+
 @Injectable({ providedIn: 'root' })
 export class ProductsDbService {
+
+  /** GET ALL */
   async getAll(): Promise<Product[]> {
     const { data, error } = await supabase
       .from('products')
       .select('*')
-      .order('created_at', { ascending: false });
+      .order('title');
 
-    if (error) throw error;
+    if (error) {
+      console.error(error);
+      return [];
+    }
     return data ?? [];
   }
 
-  async getById(id: string): Promise<Product> {
+  /** GET BY ID */
+  async getById(id: string): Promise<Product | null> {
     const { data, error } = await supabase
       .from('products')
       .select('*')
       .eq('id', id)
       .single();
 
-    if (error) throw error;
-    return data as Product;
-  }
-
-  async add(item: Omit<Product, 'id' | 'created_at'>) {
-    const { data, error } = await supabase
-      .from('products')
-      .insert(item)
-      .select('*')
-      .single();
-
-    if (error) throw error;
+    if (error) {
+      console.error(error);
+      return null;
+    }
     return data;
   }
 
-  async update(id: string, item: Partial<Omit<Product, 'id' | 'created_at'>>) {
-    const { data, error } = await supabase
+  /** ADD */
+  async add(product: Product) {
+    const { error } = await supabase
       .from('products')
-      .update(item)
-      .eq('id', id)
-      .select('*')
-      .single();
-
+      .insert(product);
     if (error) throw error;
-    return data;
   }
 
+  /** UPDATE */
+  async update(id: string, product: Partial<Product>) {
+    const { error } = await supabase
+      .from('products')
+      .update(product)
+      .eq('id', id);
+    if (error) throw error;
+  }
+
+  /** DELETE */
   async remove(id: string) {
     const { error } = await supabase
       .from('products')
       .delete()
       .eq('id', id);
-
     if (error) throw error;
   }
 }

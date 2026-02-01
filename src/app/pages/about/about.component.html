@@ -1,7 +1,71 @@
-<div class="container py-4">
-  <div class="text-uppercase text-muted small">ASIS BOUTIQUE</div>
-  <h2>Despre noi</h2>
-  <p class="text-muted">
-    Magazin de haine pentru bărbați, femei și copii. Locație: Petricani 1. Contact: 069596679.
-  </p>
+<div class="page-bg py-5">
+  <div class="container">
+    <div class="row g-4 align-items-start">
+      <!-- STÂNGA -->
+      <div class="col-12 col-lg-6">
+        <div class="text-uppercase text-muted small mb-2">ASIS BOUTIQUE</div>
+        <h1 class="display-5 fw-bold mb-3">Întemeiere</h1>
+
+        <p class="text-muted lead">
+          Ne aflăm pe piață de haine deja de 6 luni și ne descurcăm de minune
+          avem cea mai noua cea mai calitativa și cea mai mult la modă
+          modele de îmbrăcăminte de vară toamnă iarnă și primăvara.
+        </p>
+
+        <!-- Card info -->
+        <div class="card shadow-sm mt-4">
+          <div class="card-body p-0">
+            <div class="info-row">
+              <span class="label">Locație:</span>
+              <span class="value">Petricani 1.</span>
+            </div>
+            <div class="info-row">
+              <span class="label">Servicii:</span>
+              <span class="value">Vestimentație pentru bărbați și femei și copii</span>
+            </div>
+            <div class="info-row border-0">
+              <span class="label">Contact:</span>
+              <span class="value">069596679</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DREAPTA -->
+      <div class="col-12 col-lg-6">
+        <div class="card shadow-sm">
+          <div class="card-body p-4 p-lg-5">
+            <h2 class="h3 fw-bold mb-4">Contact rapid</h2>
+
+            <form (ngSubmit)="submit()">
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Nume complet</label>
+                <input [(ngModel)]="form.name" name="name" class="form-control" placeholder="ex. Ana Ionescu" />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fw-semibold">E-mail</label>
+                <input [(ngModel)]="form.email" name="email" type="email" class="form-control" placeholder="ex. ana@email.com" />
+              </div>
+
+              <div class="mb-4">
+                <label class="form-label fw-semibold">Mesaj</label>
+                <textarea [(ngModel)]="form.message" name="message" rows="7" class="form-control"
+                  placeholder="Spune-ne ce îmbunătățiri îți dorești"></textarea>
+              </div>
+
+              <button class="btn btn-dark w-100 py-3" type="submit">
+                Trimite mesajul
+              </button>
+
+              <div class="alert alert-success mt-3 mb-0" *ngIf="sent">
+                Mesaj trimis (demo) ✅
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,24 +1,39 @@
-<div class="bg-light">
-  <div class="container py-5">
-    <div class="row align-items-center g-4">
-      <div class="col-lg-6">
-        <div class="text-uppercase text-muted small">Asis Boutique</div>
-        <h1 class="fw-bold display-5">Trenduri 2025</h1>
-        <p class="text-muted">
-          Descoperă hainele și accesoriile care îți completează stilul.
-        </p>
+<div class="container py-5">
+  <h1 class="fw-bold mb-4">Catalog produse</h1>
 
-        <div class="d-flex gap-2">
-          <a routerLink="/catalog" class="btn btn-dark btn-lg">Vezi catalog</a>
-          <a routerLink="/about" class="btn btn-outline-dark btn-lg">Despre noi</a>
-        </div>
-      </div>
+  <!-- FILTRE -->
+  <div class="row g-3 mb-4">
+    <div class="col-md-6">
+      <input class="form-control"
+             [(ngModel)]="q"
+             (input)="applyFilter()"
+             placeholder="Caută produs...">
+    </div>
 
-      <div class="col-lg-6">
-        <div class="card shadow-sm">
-          <img class="img-fluid hero-img" src="assets/img/hero.jpg" alt="Asis Boutique">
-        </div>
-      </div>
+    <div class="col-md-4">
+      <select class="form-select"
+              [(ngModel)]="category"
+              (change)="applyFilter()">
+        <option *ngFor="let c of categories">{{ c }}</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- LOADER -->
+  <div *ngIf="loading" class="alert alert-info">
+    Se încarcă produsele...
+  </div>
+
+  <!-- EROARE -->
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <!-- GRID -->
+  <div class="row g-4">
+    <div class="col-md-4"
+         *ngFor="let item of filtered">
+      <app-item-card [item]="item"></app-item-card>
     </div>
   </div>
 </div>

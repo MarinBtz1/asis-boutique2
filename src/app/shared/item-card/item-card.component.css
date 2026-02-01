@@ -1,0 +1,10 @@
+.cover { height: 220px; object-fit: cover; }
+.card-hover { border-radius: 14px; overflow: hidden; }
+.card-hover:hover { transform: translateY(-2px); transition: .15s; }
+.clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

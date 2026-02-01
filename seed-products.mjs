@@ -1,0 +1,30 @@
+import { createClient } from '@supabase/supabase-js';
+
+const supabaseUrl = 'https://rptjcilhsoparwfrwcxl.supabase.co';
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJwdGpjaWxoc29wYXJ3ZnJ3Y3hsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU2ODI5NTEsImV4cCI6MjA4MTI1ODk1MX0.VbX5GFsQn_o1kLvLwbCHJmjjfA_RFxeJMSXexz-cFos';
+
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+const products = [
+  { id:'1', title:'Sacou business din lână', category:'Bărbați', price:980, image:'https://www.don-men.com/image/cache/catalog/haine/sacou-lana-gri-don-dionisio-2000x2000.jpg', description:'Sacou slim fit din lână merinos, ideal pentru întâlniri de business și evenimente formale.', available_sizes:['48','50','52'], stock:8 },
+  { id:'2', title:'Rochie midi vaporoasă', category:'Femei', price:620, image:'https://www.clessidra.ro/5471-large_default/rochie-midi-vaporoasa-delia-black.jpg', description:'Rochie din voal cu imprimeu floral, perfectă pentru evenimente de zi sau seri relaxate.', available_sizes:['S','M','L'], stock:15 },
+  { id:'3', title:'Tricou din bumbac organic', category:'Unisex', price:150, image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvob7_oIWjsYJKCByLTqBihSAZVSBCjBTSMw&s', description:'Tricou respirabil, 100% bumbac organic, disponibil în culori neutre.', available_sizes:['S','M','L','XL'], stock:42 },
+  { id:'4', title:'Geacă parka impermeabilă', category:'Outdoor', price:780, image:'https://fdcdn.akamaized.net/m/390x585/products/59771/59770333/images/res_869e0e1afbd563096201d1a2ecbf4b20.jpg?s=bNlfzHcoPAay', description:'Geacă parka căptușită, cu tratament impermeabil și glugă detasabilă.', available_sizes:['M','L','XL'], stock:5 },
+  { id:'5', title:'Sneakers eco-friendly', category:'Încălțăminte', price:540, image:'https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg', description:'Pantofi sport realizați din materiale reciclate, cu talpă flexibilă.', available_sizes:['38','39','40','41','42'], stock:27 },
+  { id:'6', title:'Rucsac urban din piele', category:'Accesorii', price:450, image:'https://urbanbag.ro/media/catalog/product/cache/10756355385beac3ab1caaac34559d3c/r/u/rucsac-din-piele-naturala-the-explorer-by-dece-_-maro-1.jpeg', description:'Rucsac minimalist din piele naturală, cu compartimente pentru laptop și accesorii.', available_sizes:[], stock:19 },
+  { id:'7', title:'Pantaloni chino clasici', category:'Bărbați', price:320, image:'https://www.bman.ro/cdn/shop/files/3_e7627eb0-b0f6-462b-8938-b7f1cac62728.jpg?v=1728045959', description:'Pantaloni chino din bumbac de calitate, cu tăietură clasică, potriviți pentru birou și casual.', available_sizes:['46','48','50','52','54'], stock:24 },
+  { id:'8', title:'Bluză cu mâneci lungi', category:'Femei', price:280, image:'https://cdn12.avanticart.ro/foggi.ro/pictures/bluza-casual-de-dama-cu-maneci-lungi-din-bumbac-aly-burgundy-105298-2.webp', description:'Bluză elegantă din material premium, cu mâneci lungi și tăietură feminină.', available_sizes:['XS','S','M','L'], stock:18 },
+  { id:'9', title:'Geantă de mână din piele', category:'Accesorii', price:680, image:'https://www.besso.ro/continut/produse/60/1500/geanta-de-mana-din-piele-naturala-dolce-eleganza-roz_981.webp', description:'Geantă de mână elegantă din piele naturală, cu interior compartimentat și fermoar sigur.', available_sizes:[], stock:12 },
+  { id:'10', title:'Blugi skinny fit', category:'Unisex', price:390, image:'https://static.mohito.com/media/catalog/product/cache/1200/a4e40ebdc3e371adff845072e1c73f37/6/6/6647Y-55J-004-1-786027_5.jpg', description:'Blugi din denim premium, cu tăietură skinny fit, spălați cu efect de uzură naturală.', available_sizes:['28','30','32','34','36','38'], stock:35 },
+  { id:'11', title:'Ghete de piele clasice', category:'Încălțăminte', price:850, image:'https://cdn20.avanticart.ro/epielenaturala.ro/pictures/ghete-scurte-dama-piele-naturala-negre-clasice-cu-inchidere-sireturi-pol250-83317-4.webp', description:'Ghete elegante din piele naturală, cu talpă din cauciuc și șireturi din piele, perfecte pentru birou.', available_sizes:['39','40','41','42','43','44'], stock:14 },
+  { id:'12', title:'Vestă termică pentru iarnă', category:'Outdoor', price:420, image:'https://api.soling.md/media/productsimage/DSC_5202.webp', description:'Vestă termică ușoară, perfectă pentru sezonul rece, cu umplutură sintetică de înaltă calitate.', available_sizes:['S','M','L','XL','XXL'], stock:21 }
+];
+
+const { data, error } = await supabase.from('products').upsert(products, { onConflict: 'id' });
+
+if (error) {
+  console.error('Seed error:', error);
+  process.exit(1);
+}
+
+console.log('Inserted/updated rows:', data?.length ?? products.length);

@@ -1,0 +1,11 @@
+<a class="card h-100 shadow-sm text-decoration-none"
+   [routerLink]="['/product', item.id]">
+
+  <img [src]="item.image" class="card-img-top" />
+
+  <div class="card-body">
+    <h5>{{ item.title }}</h5>
+    <p class="text-muted">{{ item.category }}</p>
+    <strong>{{ item.price }} MDL</strong>
+  </div>
+</a>
